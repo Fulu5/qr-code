@@ -115,13 +115,10 @@ export default {
         window.alert('is inner url : ' + _.includes(result, '//teamwork.jingdiao.com'))
         if (_.includes(result, '//teamwork.jingdiao.com')) {
           let path = _.drop(result.split('/'), 3).join('/')
-          // TODO 临时展示
-          this.result = path
           this.$router.push({
             path: path
           })
         } else {
-          window.alert('is outer url : ' + result)
           // 外部网址
           window.open(result, '_blank')
         }
@@ -129,6 +126,8 @@ export default {
         // TODO 请求查询result(对应数据库物料编码)
         this.error = 'ERROR: 未找到相关内容'
       }
+      // TODO 临时展示
+      this.result = result
     }
   }
 }
