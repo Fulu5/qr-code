@@ -8,19 +8,19 @@
       请选择本地图片进行扫描
     </p>
     <p class="decode-result">
-      扫描结果: <b>{{ result }}</b>
+      扫描结果:
     </p>
-    <div style="border:1px solid black;">
-      <a
-        v-if="isOutsideUrl"
-        :href="result"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {{result}}
-      </a>
-    </div>
-
+    <a
+      v-if="isOutsideUrl"
+      :href="result"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {{result}}
+    </a>
+    <b v-else>
+      {{ result }}
+    </b>
     <!-- 拖拽图片 -->
     <!-- <qrcode-drop-zone
       @detect="onInit"
