@@ -10,6 +10,12 @@
     <p class="decode-result">
       扫描结果: <b>{{ result }}</b>
     </p>
+    <a
+      v-if="isOutsideUrl"
+      :href="result"
+      target="_blank"
+      rel="noopener noreferrer"
+    ></a>
 
     <!-- 拖拽图片 -->
     <!-- <qrcode-drop-zone
@@ -63,14 +69,12 @@ export default {
       camera: 'rear',
       // 拖拽
       dragover: false,
-      // 跳转url用
-      winRef: ''
+      isOutsideUrl: false
     }
   },
 
   methods: {
     async onInit (promise) {
-      this.winRef = window.open('url', '_blank')
       try {
         const { content } = await promise
         if (content === null) {
@@ -123,7 +127,7 @@ export default {
           })
         } else {
           // 外部网址
-          setTimeout(this.setLocation(result), 800)
+          window.open(result, '_blank')
         }
       } else {
         // TODO 请求查询result(对应数据库物料编码)
@@ -131,9 +135,6 @@ export default {
       }
       // TODO 临时展示
       this.result = result
-    },
-    setLocation (url) {
-      this.winRef.location = url
     }
   }
 }
