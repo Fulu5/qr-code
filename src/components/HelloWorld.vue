@@ -113,7 +113,7 @@ export default {
       window.alert('is url : ' + urlregex.test(result))
       if (urlregex.test(result)) {
         // 内部网址
-        window.alert('is inner url : ' + _.includes(result, '//teamwork.jingdiao.com'))
+        window.alert('is inner url : ' + result)
         if (_.includes(result, '//teamwork.jingdiao.com')) {
           let path = _.drop(result.split('/'), 3).join('/')
           this.$router.push({
@@ -121,8 +121,7 @@ export default {
           })
         } else {
           // 外部网址
-          // window.open(result, '_blank')
-          winRef.location = result
+          setTimeout(this.setLocation(winRef, result), 800)
         }
       } else {
         // TODO 请求查询result(对应数据库物料编码)
@@ -130,6 +129,9 @@ export default {
       }
       // TODO 临时展示
       this.result = result
+    },
+    setLocation (obj, url) {
+      obj.location = url
     }
   }
 }
