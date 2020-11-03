@@ -12,7 +12,7 @@
     </p>
 
     <!-- 拖拽图片 -->
-    <qrcode-drop-zone
+    <!-- <qrcode-drop-zone
       @detect="onInit"
       @dragover="onDragOver"
       @init="logErrors"
@@ -23,7 +23,7 @@
       >
         请将二维码图片拖入此区域
       </div>
-    </qrcode-drop-zone>
+    </qrcode-drop-zone> -->
     <!-- 摄像头扫描 -->
     <qrcode-stream
       v-if="error === null"
@@ -113,12 +113,14 @@ export default {
         // 内部网址
         if (_.includes(result, '//teamwork.jingdiao.com')) {
           let path = _.drop(result.split('/'), 3).join('/')
+          // TODO 临时展示
+          this.result = path
           this.$router.push({
             path: path
           })
         } else {
           // 外部网址
-          window.open(result, '__blank')
+          window.open(result, '_blank')
         }
       } else {
         // TODO 请求查询result(对应数据库物料编码)
