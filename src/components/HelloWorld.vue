@@ -10,12 +10,14 @@
     <p class="decode-result">
       扫描结果: <b>{{ result }}</b>
     </p>
-    <a
-      v-if="isOutsideUrl"
-      :href="result"
-      target="_blank"
-      rel="noopener noreferrer"
-    ></a>
+    <div style="border:1px solid black;">
+      <a
+        v-if="isOutsideUrl"
+        :href="result"
+        target="_blank"
+        rel="noopener noreferrer"
+      ></a>
+    </div>
 
     <!-- 拖拽图片 -->
     <!-- <qrcode-drop-zone
