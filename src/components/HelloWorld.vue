@@ -126,6 +126,7 @@ export default {
             path: path
           })
         } else {
+          this.isOutsideUrl = true
           // 外部网址
           window.open(result, '_blank')
         }
