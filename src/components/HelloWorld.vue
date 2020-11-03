@@ -62,12 +62,15 @@ export default {
       // 摄像头
       camera: 'rear',
       // 拖拽
-      dragover: false
+      dragover: false,
+      // 跳转url用
+      winRef: ''
     }
   },
 
   methods: {
     async onInit (promise) {
+      this.winRef = window.open('url', '_blank')
       try {
         const { content } = await promise
         if (content === null) {
@@ -106,7 +109,6 @@ export default {
       this.dragover = isDraggingOver
     },
     processResult (result) {
-      var winRef = window.open('url', '_blank')
       // eslint-disable-next-line no-useless-escape
       const urlregex = /(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
       // 是否为网址
@@ -121,7 +123,7 @@ export default {
           })
         } else {
           // 外部网址
-          setTimeout(this.setLocation(winRef, result), 800)
+          setTimeout(this.setLocation(result), 800)
         }
       } else {
         // TODO 请求查询result(对应数据库物料编码)
@@ -130,8 +132,8 @@ export default {
       // TODO 临时展示
       this.result = result
     },
-    setLocation (obj, url) {
-      obj.location = url
+    setLocation (url) {
+      this.winRef.location = url
     }
   }
 }
