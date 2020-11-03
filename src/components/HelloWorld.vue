@@ -109,8 +109,10 @@ export default {
       // eslint-disable-next-line no-useless-escape
       const urlregex = /(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
       // 是否为网址
+      window.alert('is url : ' + urlregex.test(result))
       if (urlregex.test(result)) {
         // 内部网址
+        window.alert('is inner url : ' + _.includes(result, '//teamwork.jingdiao.com'))
         if (_.includes(result, '//teamwork.jingdiao.com')) {
           let path = _.drop(result.split('/'), 3).join('/')
           // TODO 临时展示
@@ -119,6 +121,7 @@ export default {
             path: path
           })
         } else {
+          window.alert('is outer url : ' + result)
           // 外部网址
           window.open(result, '_blank')
         }
