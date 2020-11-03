@@ -16,7 +16,9 @@
         :href="result"
         target="_blank"
         rel="noopener noreferrer"
-      ></a>
+      >
+        {{result}}
+      </a>
     </div>
 
     <!-- 拖拽图片 -->
