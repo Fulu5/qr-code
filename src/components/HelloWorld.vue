@@ -106,6 +106,7 @@ export default {
       this.dragover = isDraggingOver
     },
     processResult (result) {
+      var winRef = window.open('url', '_blank')
       // eslint-disable-next-line no-useless-escape
       const urlregex = /(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
       // 是否为网址
@@ -120,7 +121,8 @@ export default {
           })
         } else {
           // 外部网址
-          window.open(result, '_blank')
+          // window.open(result, '_blank')
+          winRef.location = result
         }
       } else {
         // TODO 请求查询result(对应数据库物料编码)
