@@ -121,6 +121,7 @@ export default {
       this.dragover = isDraggingOver
     },
     processResult (result) {
+      this.isOutsideUrl = false
       // eslint-disable-next-line no-useless-escape
       const urlregex = /(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
       // 是否为网址
