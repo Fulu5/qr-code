@@ -35,7 +35,7 @@
     </qrcode-drop-zone>
     <!-- 扫描结果 -->
     <p class="decode-result">
-      {{$t('qrcode.result')}}
+      扫描结果：
     </p>
     <p v-if="isOutsideUrl">
       <a
