@@ -26,7 +26,7 @@
         :class="{ 'dragover': dragover }"
       >
         <div class="q-pt-md">
-          {{$t('qrcode.dragOrSelect')}}
+          请将二维码图片拖入此区域，或者选择图片
         </div>
         <div class="q-pt-sm">
           <qrcode-capture @detect="onInit" />
