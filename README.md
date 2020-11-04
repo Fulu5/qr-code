@@ -20,5 +20,5 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-## 更新github.io
-推送之前 npm run build 
+## 推送并更新github.io
+npm run deploy

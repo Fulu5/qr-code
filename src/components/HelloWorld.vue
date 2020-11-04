@@ -6,7 +6,7 @@
     </p>
     <!-- 摄像头扫描 -->
     <qrcode-stream
-      v-if="this.$q.platform.is.mobile && error === null"
+      v-if="error === null"
       class="qrcode-stream"
       :camera="camera"
       @init="onInit"
