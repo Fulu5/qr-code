@@ -1,14 +1,41 @@
 <template>
   <div class="qrcode-container q-ma-md">
-    <!-- 扫描结果 -->
+    <!-- 报错信息 -->
     <p>
       <b class="error">{{ error }}</b>
     </p>
-    <p>
-      请选择本地图片进行扫描
-    </p>
+    <!-- 摄像头扫描 -->
+    <qrcode-stream
+      v-if="this.$q.platform.is.mobile && error === null"
+      class="qrcode-stream"
+      :camera="camera"
+      @init="onInit"
+      @decode="processResult"
+    >
+      <div class="line"></div>
+      <div class="angle"></div>
+    </qrcode-stream>
+    <!-- 拖拽图片 -->
+    <qrcode-drop-zone
+      @detect="onInit"
+      @dragover="onDragOver"
+      @init="logErrors"
+    >
+      <div
+        class="drop-area"
+        :class="{ 'dragover': dragover }"
+      >
+        <div class="q-pt-md">
+          {{$t('qrcode.dragOrSelect')}}
+        </div>
+        <div class="q-pt-sm">
+          <qrcode-capture @detect="onInit" />
+        </div>
+      </div>
+    </qrcode-drop-zone>
+    <!-- 扫描结果 -->
     <p class="decode-result">
-      扫描结果:
+      {{$t('qrcode.result')}}
     </p>
     <p v-if="isOutsideUrl">
       <a
@@ -24,41 +51,10 @@
         {{ result }}
       </b>
     </p>
-
-    <!-- 拖拽图片 -->
-    <!-- <qrcode-drop-zone
-      @detect="onInit"
-      @dragover="onDragOver"
-      @init="logErrors"
-    >
-      <div
-        class="drop-area"
-        :class="{ 'dragover': dragover }"
-      >
-        请将二维码图片拖入此区域
-      </div>
-    </qrcode-drop-zone> -->
-    <!-- 摄像头扫描 -->
-    <qrcode-stream
-      v-if="error === null"
-      class="qrcode-stream"
-      :camera="camera"
-      @init="onInit"
-      @decode="processResult"
-    >
-      <div class="line"></div>
-      <div class="angle"></div>
-    </qrcode-stream>
-    <!-- 上传图片扫描 -->
-    <div class="q-my-md">
-      <qrcode-capture @detect="onInit" />
-    </div>
   </div>
 </template>
 
 <script>
-
-import _ from 'lodash'
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
 
 export default {
@@ -98,7 +94,7 @@ export default {
         } else if (error.name === 'NotFoundError') {
           this.error = 'ERROR: 未检测到摄像头'
         } else if (error.name === 'NotSupportedError' || error.name === 'InsecureContextError') {
-          this.error = 'ERROR: 需要安全上下文(HTTPS，localhost)'
+          this.error = 'ERROR: 调用摄像头需要安全的上下文环境(HTTPS，localhost)'
         } else if (error.name === 'NotReadableError') {
           this.error = 'ERROR: 相机被占用'
         } else if (error.name === 'OverconstrainedError') {
@@ -125,23 +121,8 @@ export default {
       // eslint-disable-next-line no-useless-escape
       const urlregex = /(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
       // 是否为网址
-      window.alert('is url : ' + urlregex.test(result))
       if (urlregex.test(result)) {
-        // 内部网址
-        window.alert('is inner url : ' + result)
-        if (_.includes(result, '//teamwork.jingdiao.com')) {
-          let path = _.drop(result.split('/'), 3).join('/')
-          this.$router.push({
-            path: path
-          })
-        } else {
-          this.isOutsideUrl = true
-          // 外部网址
-          window.open(result, '_blank')
-        }
-      } else {
-        // TODO 请求查询result(对应数据库物料编码)
-        this.error = 'ERROR: 未找到相关内容'
+        this.isOutsideUrl = true
       }
       // TODO 临时展示
       this.result = result
